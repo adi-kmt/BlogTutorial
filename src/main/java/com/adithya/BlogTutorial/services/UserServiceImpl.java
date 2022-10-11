@@ -4,6 +4,7 @@ import com.adithya.BlogTutorial.entities.User;
 import com.adithya.BlogTutorial.exceptions.models.ResourceNotFoundException;
 import com.adithya.BlogTutorial.payloads.UserDto;
 import com.adithya.BlogTutorial.repositories.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -61,27 +65,12 @@ public class UserServiceImpl implements UserService {
 
 
     public User dtoToUser(UserDto userDto) {
-        User user = new User();
-
-        user.setId(userDto.getId());
-        user.setName(userDto.getName());
-        user.setEmail(userDto.getEmail());
-        user.setAbout(userDto.getAbout());
-        user.setPassword(userDto.getPassword());
-
-        return user;
+        return modelMapper.map(userDto, User.class);
     }
 
     public UserDto userToDto(User user) {
-        UserDto userDto = new UserDto();
 
-        userDto.setId(user.getId());
-        userDto.setName(user.getName());
-        userDto.setEmail(user.getEmail());
-        userDto.setAbout(user.getAbout());
-        userDto.setPassword(user.getPassword());
-
-        return userDto;
+        return modelMapper.map(user, UserDto.class);
     }
 
 }
