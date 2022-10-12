@@ -2,7 +2,7 @@ package com.adithya.BlogTutorial.controllers;
 
 import com.adithya.BlogTutorial.payloads.ApiResponse;
 import com.adithya.BlogTutorial.payloads.UserDto;
-import com.adithya.BlogTutorial.services.UserService;
+import com.adithya.BlogTutorial.services.user.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

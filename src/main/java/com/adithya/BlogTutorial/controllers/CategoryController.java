@@ -2,7 +2,7 @@ package com.adithya.BlogTutorial.controllers;
 
 import com.adithya.BlogTutorial.payloads.ApiResponse;
 import com.adithya.BlogTutorial.payloads.CategoryDto;
-import com.adithya.BlogTutorial.services.CategoryService;
+import com.adithya.BlogTutorial.services.category.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

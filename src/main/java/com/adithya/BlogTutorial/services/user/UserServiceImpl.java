@@ -1,4 +1,4 @@
-package com.adithya.BlogTutorial.services;
+package com.adithya.BlogTutorial.services.user;
 
 import com.adithya.BlogTutorial.entities.User;
 import com.adithya.BlogTutorial.exceptions.models.ResourceNotFoundException;

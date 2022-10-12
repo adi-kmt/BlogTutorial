@@ -1,4 +1,4 @@
-package com.adithya.BlogTutorial.services;
+package com.adithya.BlogTutorial.services.category;
 
 import com.adithya.BlogTutorial.entities.Category;
 import com.adithya.BlogTutorial.exceptions.models.ResourceNotFoundException;
