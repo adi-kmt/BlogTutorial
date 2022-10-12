@@ -1,11 +1,11 @@
 package com.adithya.BlogTutorial.payloads;
 
-import com.adithya.BlogTutorial.entities.Category;
-import com.adithya.BlogTutorial.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -22,7 +22,9 @@ public class PostDto {
 
     private Date addedDate;
 
-    private Category category;
+    private CategoryDto category;
 
-    private User user;
+    private UserDto user;
+
+    private Set<CommentDto> comments=new HashSet<>();
 }
