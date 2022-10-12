@@ -5,11 +5,16 @@ import com.adithya.BlogTutorial.entities.Post;
 import com.adithya.BlogTutorial.entities.User;
 import com.adithya.BlogTutorial.exceptions.models.ResourceNotFoundException;
 import com.adithya.BlogTutorial.payloads.PostDto;
+import com.adithya.BlogTutorial.payloads.PostResponse;
 import com.adithya.BlogTutorial.repositories.CategoryRepository;
 import com.adithya.BlogTutorial.repositories.PostRepository;
 import com.adithya.BlogTutorial.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -102,5 +107,31 @@ public class PostServiceImpl implements PostService {
 
         return posts.stream().map((post) -> this.modelMapper.map(post, PostDto.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public PostResponse getAllPost(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
+        Sort sort = (sortDir.equalsIgnoreCase("asc")) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+
+        Pageable p = PageRequest.of(pageNumber, pageSize, sort);
+
+        Page<Post> pagePost = this.postRepo.findAll(p);
+
+        List<Post> allPosts = pagePost.getContent();
+
+        List<PostDto> postDtos = allPosts.stream().map((post) -> this.modelMapper.map(post, PostDto.class))
+                .collect(Collectors.toList());
+
+        PostResponse postResponse = new PostResponse();
+
+        postResponse.setContent(postDtos);
+        postResponse.setPageNumber(pagePost.getNumber());
+        postResponse.setPageSize(pagePost.getSize());
+        postResponse.setTotalElements(pagePost.getTotalElements());
+
+        postResponse.setTotalPages(pagePost.getTotalPages());
+        postResponse.setLastPage(pagePost.isLast());
+
+        return postResponse;
     }
 }

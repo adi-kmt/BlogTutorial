@@ -1,7 +1,9 @@
 package com.adithya.BlogTutorial.controllers;
 
+import com.adithya.BlogTutorial.config.AppConstants;
 import com.adithya.BlogTutorial.payloads.ApiResponse;
 import com.adithya.BlogTutorial.payloads.PostDto;
+import com.adithya.BlogTutorial.payloads.PostResponse;
 import com.adithya.BlogTutorial.services.post.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +21,6 @@ public class PostController {
 
 
     //	create
-
     @PostMapping("/user/{userId}/category/{categoryId}/posts")
     public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto, @PathVariable Integer userId,
                                               @PathVariable Integer categoryId) {
@@ -56,6 +57,18 @@ public class PostController {
         PostDto postDto = this.postService.getPostById(postId);
         return new ResponseEntity<PostDto>(postDto, HttpStatus.OK);
 
+    }
+
+    //get All posts paginated and sorted
+    @GetMapping("/posts")
+    public ResponseEntity<PostResponse> getAllPosts(
+            @RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = AppConstants.SORT_DIR, required = false) String sortDir) {
+
+        PostResponse postResponse = this.postService.getAllPost(pageNumber, pageSize, sortBy, sortDir);
+        return new ResponseEntity<PostResponse>(postResponse, HttpStatus.OK);
     }
 
     // delete post
